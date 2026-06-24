@@ -5,13 +5,6 @@ from documents.models import Document
 
 
 class DueDiligenceSession(models.Model):
-    """
-    One due-diligence engagement for a target company, grouping together
-    every Document the analyst has uploaded for it. A session can have many
-    AnalysisReports (re-run over time as new documents are added) and many
-    ad-hoc Questions.
-    """
-
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="sessions"
     )
@@ -27,18 +20,13 @@ class DueDiligenceSession(models.Model):
 
 
 class AnalysisReport(models.Model):
-    """
-    A generated due-diligence report: executive summary, risk assessment, and
-    growth opportunities, all derived from retrieved chunks and grounded with
-    citations back to the source documents.
-    """
 
     session = models.ForeignKey(
         DueDiligenceSession, on_delete=models.CASCADE, related_name="reports"
     )
     executive_summary = models.TextField()
-    risk_assessment = models.JSONField(default=list)  # [{title, severity, explanation}, ...]
-    growth_opportunities = models.JSONField(default=list)  # [{title, explanation}, ...]
+    risk_assessment = models.JSONField(default=list)  
+    growth_opportunities = models.JSONField(default=list)  
     raw_llm_response = models.JSONField(default=dict)
     generated_at = models.DateTimeField(auto_now_add=True)
 
@@ -50,12 +38,6 @@ class AnalysisReport(models.Model):
 
 
 class Citation(models.Model):
-    """
-    Links a specific claim made in a report (or an answer) back to the exact
-    document chunk and page number it was derived from — this is what makes
-    the output 'source-backed' rather than a black-box summary.
-    """
-
     report = models.ForeignKey(
         AnalysisReport, on_delete=models.CASCADE, related_name="citations", null=True, blank=True
     )
@@ -70,7 +52,6 @@ class Citation(models.Model):
 
 
 class Question(models.Model):
-    """An interactive Q&A turn against a session's document set."""
 
     session = models.ForeignKey(
         DueDiligenceSession, on_delete=models.CASCADE, related_name="questions"
