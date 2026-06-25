@@ -5,7 +5,6 @@ from documents.models import Document
 
 from .models import AnalysisReport, Citation, DueDiligenceSession, Question
 
-
 class CitationSerializer(serializers.ModelSerializer):
     chunk = DocumentChunkSerializer(read_only=True)
     document_title = serializers.CharField(source="chunk.document.title", read_only=True)
