@@ -24,7 +24,7 @@ urlpatterns = [
     path("api/auth/", include("accounts.urls")),
     path("api/documents/", include("documents.api_urls")),
     path("api/analysis/", include("analysis.api_urls")),
-    # Server-rendered demo UI (for portfolio screenshots / quick manual testing)
+    
     path("", include("analysis.urls")),
     path("documents/", include("documents.urls")),
 ]
