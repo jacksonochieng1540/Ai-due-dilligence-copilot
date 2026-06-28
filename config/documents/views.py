@@ -35,7 +35,7 @@ class DocumentViewSet(viewsets.ModelViewSet):
         document = self.get_object()
         try:
             index_document(document)
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:  # noqa: BLE00
             return Response(
                 {"detail": f"Processing failed: {exc}"},
                 status=status.HTTP_400_BAD_REQUEST,
