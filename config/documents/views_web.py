@@ -17,7 +17,6 @@ def upload_document(request):
             try:
                 index_document(document)
             except Exception:
-                # Error is already stored on the document; show it in the list view.
                 pass
             return redirect("documents:list")
     else:
