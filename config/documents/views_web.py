@@ -35,7 +35,7 @@ def document_list(request):
 @login_required
 def document_detail(request, pk):
     document = get_object_or_404(Document, pk=pk, owner=request.user)
-    chunks = document.chunks.all()[:20]  # preview only, avoid dumping huge filings
+    chunks = document.chunks.all()[:20] 
     return render(
         request, "documents/detail.html", {"document": document, "chunks": chunks}
     )
