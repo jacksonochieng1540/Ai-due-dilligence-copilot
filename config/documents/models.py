@@ -4,11 +4,6 @@ from pgvector.django import HnswIndex, VectorField
 
 
 class Document(models.Model):
-    """
-    A single uploaded source file: a 10-K filing, a balance sheet, an investor
-    deck, a market report, etc. One due-diligence session can reference many
-    Documents belonging to the same target company.
-    """
 
     class DocumentType(models.TextChoices):
         FILING = "filing", "Regulatory Filing"
