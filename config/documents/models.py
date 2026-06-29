@@ -41,11 +41,7 @@ class Document(models.Model):
 
 
 class DocumentChunk(models.Model):
-    """
-    A single retrievable passage of a Document, with its embedding vector
-    stored directly in Postgres via pgvector. This is what gets searched
-    during retrieval.
-    """
+ 
 
     document = models.ForeignKey(
         Document, on_delete=models.CASCADE, related_name="chunks"
