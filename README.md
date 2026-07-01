@@ -6,7 +6,7 @@ generates **source-backed** risk assessments, growth opportunities, and
 executive summaries — plus an ad-hoc Q&A interface, all grounded with
 citations back to the exact document and page they came from.
 
-Built by Jackson Ochieng Ayagah ([@ayagah](https://github.com/ayagah)).
+Built by Jackson Ochieng
 
 ## Why this project
 
