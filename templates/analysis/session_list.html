@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Due Diligence Sessions{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>Your Due Diligence Sessions</h2>
+  <a href="{% url 'analysis:session_create' %}" class="btn btn-primary">+ New Session</a>
+</div>
+<div class="row">
+  {% for session in sessions %}
+  <div class="col-md-4 mb-3">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ session.company_name }}</h5>
+        <p class="card-text text-muted">{{ session.documents.count }} document(s)</p>
+        <a href="{% url 'analysis:session_detail' session.pk %}" class="btn btn-outline-primary btn-sm">Open</a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p class="text-muted">No sessions yet — create one to start a due-diligence review.</p>
+  {% endfor %}
+</div>
+{% endblock %}

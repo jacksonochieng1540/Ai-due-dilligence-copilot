@@ -1,0 +1,13 @@
+.badge-risk-high { background-color: #dc3545; }
+.badge-risk-medium { background-color: #fd7e14; }
+.badge-risk-low { background-color: #198754; }
+.citation-pill {
+  font-size: 0.75rem;
+  display: inline-block;
+  margin: 2px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: #f1f1f1;
+  color: #333;
+}
+.report-card { border-left: 4px solid #0d6efd; }

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}Upload Document{% endblock %}
+{% block content %}
+<h2>Upload a Due Diligence Document</h2>
+<p class="text-muted">Filings, financial statements, investor presentations, or market reports. PDF or TXT.</p>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form|crispy }}
+  <button type="submit" class="btn btn-primary mt-2">Upload &amp; Process</button>
+</form>
+{% endblock %}

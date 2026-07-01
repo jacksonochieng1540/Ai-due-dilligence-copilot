@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}{{ session.company_name }} — Due Diligence{% endblock %}
+{% block content %}
+<h2>{{ session.company_name }}</h2>
+<p class="text-muted">
+  Documents in scope:
+  {% for doc in session.documents.all %}
+    <span class="badge bg-light text-dark border">{{ doc.title }}</span>
+  {% endfor %}
+</p>
+
+<form method="post" class="mb-4">
+  {% csrf_token %}
+  <button type="submit" name="generate_report" class="btn btn-primary">
+    {% if report %}Regenerate Report{% else %}Generate Due Diligence Report{% endif %}
+  </button>
+</form>
+
+{% if report %}
+<div class="card report-card mb-4">
+  <div class="card-body">
+    <h4>Executive Summary</h4>
+    <p>{{ report.executive_summary }}</p>
+
+    <h5 class="mt-4">Risk Assessment</h5>
+    {% for risk in report.risk_assessment %}
+      <div class="mb-2">
+        <span class="badge badge-risk-{{ risk.severity }}">{{ risk.severity|upper }}</span>
+        <strong>{{ risk.title }}</strong>
+        <p class="mb-1 small">{{ risk.explanation }}</p>
+      </div>
+    {% empty %}
+      <p class="text-muted small">No specific risks identified from the available documents.</p>
+    {% endfor %}
+
+    <h5 class="mt-4">Growth Opportunities</h5>
+    {% for opp in report.growth_opportunities %}
+      <div class="mb-2">
+        <strong>{{ opp.title }}</strong>
+        <p class="mb-1 small">{{ opp.explanation }}</p>
+      </div>
+    {% empty %}
+      <p class="text-muted small">No specific growth opportunities identified from the available documents.</p>
+    {% endfor %}
+
+    <h6 class="mt-4">Sources cited</h6>
+    {% for citation in report.citations.all %}
+      <span class="citation-pill">{{ citation.chunk.document.title }} · p.{{ citation.chunk.page_number }}</span>
+    {% empty %}
+      <span class="text-muted small">No citations recorded.</span>
+    {% endfor %}
+
+    <p class="text-muted small mt-3 mb-0">Generated {{ report.generated_at }}</p>
+  </div>
+</div>
+{% endif %}
+
+<h4>Ask a question</h4>
+<form method="post" class="mb-4 d-flex gap-2">
+  {% csrf_token %}
+  <input type="text" name="question" class="form-control" placeholder="e.g. What were total liabilities last fiscal year?">
+  <button type="submit" class="btn btn-outline-primary">Ask</button>
+</form>
+
+{% for q in questions %}
+<div class="mb-3">
+  <p class="mb-1"><strong>Q:</strong> {{ q.question_text }}</p>
+  <p class="mb-1"><strong>A:</strong> {{ q.answer_text }}</p>
+  {% for citation in q.citations.all %}
+    <span class="citation-pill">{{ citation.chunk.document.title }} · p.{{ citation.chunk.page_number }}</span>
+  {% endfor %}
+</div>
+{% endfor %}
+{% endblock %}

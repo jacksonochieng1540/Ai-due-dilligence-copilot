@@ -1,0 +1,29 @@
+databases:
+  - name: due-diligence-db
+    plan: free
+    postgresMajorVersion: 16
+
+services:
+  - type: web
+    name: ai-due-diligence-copilot
+    runtime: python
+    plan: free
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn config.wsgi:application"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: due-diligence-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: EMBEDDING_MODEL
+        value: text-embedding-3-small
+      - key: CHAT_MODEL
+        value: gpt-4o-mini
+      - key: PYTHON_VERSION
+        value: "3.11.9"

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}{{ document.title }}{% endblock %}
+{% block content %}
+<h2>{{ document.title }}</h2>
+<p class="text-muted">{{ document.company_name }} &middot; {{ document.get_document_type_display }} &middot; {{ document.page_count }} pages</p>
+
+{% if document.processing_error %}
+  <div class="alert alert-danger">{{ document.processing_error }}</div>
+{% endif %}
+
+<h5 class="mt-4">Indexed chunk preview (first 20)</h5>
+<div class="list-group">
+  {% for chunk in chunks %}
+  <div class="list-group-item">
+    <div class="d-flex justify-content-between">
+      <strong>Chunk #{{ chunk.chunk_index }}</strong>
+      <span class="text-muted">page {{ chunk.page_number }}</span>
+    </div>
+    <p class="mb-0 small">{{ chunk.content|truncatewords:40 }}</p>
+  </div>
+  {% empty %}
+  <p class="text-muted">No chunks indexed yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}
